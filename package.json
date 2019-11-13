@@ -1,0 +1,50 @@
+{
+  "name": "yandex-diplom",
+  "version": "1.0.0",
+  "description": "finish work Yandex.Praktikum",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denizen24/yandex-diplom.git"
+  },
+  "keywords": [
+    "Yandex.Praktikum",
+    "News",
+    "Site-news",
+    "denizen24.ru"
+  ],
+  "author": "Vladimirov Denis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/denizen24/yandex-diplom/issues"
+  },
+  "homepage": "https://github.com/denizen24/yandex-diplom#readme",
+  "devDependencies": {
+    "eslint": "^6.4.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "nodemon": "^1.19.4"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "celebrate": "^10.0.1",
+    "cookie-parser": "^1.4.4",
+    "core-js": "3.1.4",
+    "dotenv": "^8.2.0",
+    "editorconfig": "^0.15.3",
+    "express": "^4.17.1",
+    "express-winston": "^4.0.1",
+    "helmet": "^3.21.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.3.2",
+    "mongoose": "^5.7.7",
+    "mongoose-unique-validator": "^2.0.3",
+    "mongoose-validator": "^2.1.0",
+    "path": "^0.12.7",
+    "winston": "^3.2.1"
+  }
+}
