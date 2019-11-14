@@ -9,7 +9,7 @@ const router = Router();
 router.use(requestLogger);
 
 router.get('/me', (req, res, next) => {
-  User.findById({ _id: req.user._id }, (err, user) => {
+  User.findById({ _id: req.user }, (err, user) => {
     if (!user) {
       throw new NotFoundError('Нет пользователя с таким id');
     }
