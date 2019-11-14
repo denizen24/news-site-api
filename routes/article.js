@@ -52,7 +52,7 @@ router.post('/', celebrate({
     keyword: Joi.string().required().min(2).max(15),
     title: Joi.string().required().min(2).max(30),
     text: Joi.string().required().min(2).max(500),
-    data: Joi.date().required().max('now').timestamp('javascript'),
+    data: Joi.string().required().min(2).max(22),
     source: Joi.string().required().min(2).max(30),
     link: Joi.string().required().min(5),
     image: Joi.string().required().min(5),
