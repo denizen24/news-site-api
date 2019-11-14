@@ -1,10 +1,5 @@
 const mongoose = require('mongoose');
-const validate = require('mongoose-validator');
-
-const urlValidator = validate({
-  validator: 'matches',
-  arguments: /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/,
-});
+require('mongoose-type-url');
 
 const articleSchema = new mongoose.Schema({
   keyword: {
@@ -17,7 +12,7 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 2,
-    maxlength: 30,
+    maxlength: 100,
   },
   text: {
     type: String,
@@ -26,25 +21,24 @@ const articleSchema = new mongoose.Schema({
     maxlength: 500,
   },
   date: {
-    type: Date,
-    required: true,
-    default: Date.now,
-  },
-  source: {
     type: String,
     required: true,
     minlength: 2,
     maxlength: 30,
   },
-  link: {
+  source: {
     type: String,
     required: true,
-    validate: urlValidator,
+    minlength: 2,
+    maxlength: 15,
+  },
+  link: {
+    type: mongoose.SchemaTypes.Url,
+    required: true,
   },
   image: {
-    type: String,
+    type: mongoose.SchemaTypes.Url,
     required: true,
-    validate: urlValidator,
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
