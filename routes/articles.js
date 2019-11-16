@@ -50,10 +50,10 @@ router.delete('/:articleId', celebrate({
 router.post('/', celebrate({
   body: Joi.object().keys({
     keyword: Joi.string().required().min(2).max(15),
-    title: Joi.string().required().min(2).max(30),
+    title: Joi.string().required().min(2).max(100),
     text: Joi.string().required().min(2).max(500),
-    data: Joi.date().required().max('now').timestamp('javascript'),
-    source: Joi.string().required().min(2).max(30),
+    date: Joi.string().required().min(2).max(30),
+    source: Joi.string().required().min(2).max(15),
     link: Joi.string().required().min(5),
     image: Joi.string().required().min(5),
   }),

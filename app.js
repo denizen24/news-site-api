@@ -4,18 +4,25 @@ const path = require('path');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const { celebrate, Joi, errors } = require('celebrate');
+const rateLimit = require('express-rate-limit');
+const compression = require('compression');
 const homeRoutes = require('./routes/home');
 const usersRoutes = require('./routes/users');
-const articleRoutes = require('./routes/article');
+const articleRoutes = require('./routes/articles');
 const auth = require('./middlewares/auth');
 const { createUser } = require('./controllers/users');
 const { login } = require('./controllers/login');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+require('dotenv').config();
 
 const undfRoute = { message: 'Запрашиваемый ресурс не найден' };
 
 const app = express();
-require('dotenv').config();
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+});
 
 mongoose.connect('mongodb://localhost:27017/news_site', {
   useNewUrlParser: true,
@@ -32,6 +39,8 @@ app.use(express.json());
 
 app.use(cookieParser());
 app.use(helmet());
+app.use(limiter);
+app.use(compression());
 
 app.use('/', homeRoutes);
 
@@ -51,7 +60,7 @@ app.post('/signup', celebrate({
 }), createUser);
 
 app.use('/users', auth, usersRoutes);
-app.use('/article', auth, articleRoutes);
+app.use('/articles', auth, articleRoutes);
 
 app.use(errorLogger);
 app.use(errors());
