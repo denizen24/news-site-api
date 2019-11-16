@@ -2,22 +2,22 @@ const { Router } = require('express');
 const { celebrate, Joi, errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('../middlewares/logger');
 const { createArticle } = require('../controllers/article');
+const { delArticle } = require('../controllers/delArticle');
 const ServerError = require('../errors/server-err');
 
 const Article = require('../models/article');
 
 const router = Router();
-const errRoute = { message: 'Нет карточки с таким id' };
 
 router.use(requestLogger);
 
 router.get('/', (req, res, next) => {
   Article.find({})
-    .then((article) => {
-      if (!article) {
+    .then((articles) => {
+      if (!articles) {
         throw new ServerError('Внутренняя ошибка сервера');
       }
-      res.send({ data: article });
+      res.send({ articles });
     })
     .catch(next);
 });
@@ -26,26 +26,7 @@ router.delete('/:articleId', celebrate({
   params: Joi.object().keys({
     articleId: Joi.string().alphanum().length(24),
   }),
-}), (req, res) => {
-  Article
-    .findById({ _id: req.params.articleId }, (err, data) => {
-      if (!data) {
-        return res
-          .status(404).send(errRoute)
-          .end();
-      }
-      if (!(data.owner.toString() === req.user.toString())) {
-        return res
-          .status(401)
-          .send({ message: 'Нет прав на удаление статьи' })
-          .end();
-      }
-      Article.findByIdAndRemove(req.params.articleId)
-        .then((article) => res.send({ data: article }))
-        .catch(() => res.status(404).send(errRoute));
-      return undefined;
-    });
-});
+}), delArticle);
 
 router.post('/', celebrate({
   body: Joi.object().keys({

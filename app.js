@@ -1,6 +1,5 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const path = require('path');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const { celebrate, Joi, errors } = require('celebrate');
@@ -15,7 +14,8 @@ const { login } = require('./controllers/login');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 require('dotenv').config();
 
-const undfRoute = { message: 'Запрашиваемый ресурс не найден' };
+const DATABASE_URL = process.env.MONGODB_DATABASE_URL;
+const undfRoute = { message: process.env.UNDF_ROUTE };
 
 const app = express();
 
@@ -24,7 +24,7 @@ const limiter = rateLimit({
   max: 100,
 });
 
-mongoose.connect('mongodb://localhost:27017/news_site', {
+mongoose.connect(DATABASE_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -33,7 +33,6 @@ mongoose.connect('mongodb://localhost:27017/news_site', {
 
 app.use(requestLogger);
 
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
