@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcrypt');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
