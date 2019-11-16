@@ -13,7 +13,10 @@ router.get('/me', (req, res, next) => {
     if (!user) {
       throw new NotFoundError('Нет пользователя с таким id');
     }
-    res.send({ data: user });
+    const { name } = user;
+    const { email } = user;
+
+    res.send({ name, email });
   })
     .catch(next);
 });
