@@ -14,8 +14,10 @@ const { login } = require('./controllers/login');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 require('dotenv').config();
 
-const DATABASE_URL = process.env.MONGODB_DATABASE_URL;
-const undfRoute = { message: process.env.UNDF_ROUTE };
+const { NODE_ENV, MONGODB_DATABASE_URL, UNDF_ROUTE } = process.env;
+
+const DATABASE_URL = (NODE_ENV === 'production' ? MONGODB_DATABASE_URL : 'mongodb://localhost:27017/news_site');
+const undfRoute = { message: (NODE_ENV === 'production' ? UNDF_ROUTE : 'Запрашиваемый ресурс не найден') };
 
 const app = express();
 
