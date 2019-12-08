@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('../middlewares/logger');
-const User = require('../models/user');
+const User = require('../models/user').default;
 const NotFoundError = require('../errors/not-found-err');
 
 const router = Router();

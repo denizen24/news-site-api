@@ -2,6 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
+const cors = require('cors');
 const { celebrate, Joi, errors } = require('celebrate');
 const rateLimit = require('express-rate-limit');
 const compression = require('compression');
@@ -16,10 +17,16 @@ require('dotenv').config();
 
 const { NODE_ENV, MONGODB_DATABASE_URL, UNDF_ROUTE } = process.env;
 
-const DATABASE_URL = (NODE_ENV === 'production' ? MONGODB_DATABASE_URL : 'mongodb://localhost:27017/news_site');
+const DATABASE_URL = (NODE_ENV === 'production' ? MONGODB_DATABASE_URL : 'mongodb://localhost:27017/news_site2');
 const undfRoute = { message: (NODE_ENV === 'production' ? UNDF_ROUTE : 'Запрашиваемый ресурс не найден') };
 
 const app = express();
+
+app.set('trust proxy', 1);
+app.use(cors(({
+  credentials: true,
+  origin: true,
+})));
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -66,6 +73,7 @@ app.use('/articles', auth, articleRoutes);
 app.use(errorLogger);
 app.use(errors());
 
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
   res

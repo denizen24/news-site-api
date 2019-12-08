@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
+const User = require('../models/user').default;
 const BadReqError = require('../errors/bad-req');
 
 module.exports.createUser = (req, res, next) => {
