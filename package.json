@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
-    "start": "node app.js"
+    "start": "node app.js",
+    "deploy": "scp -r ./dist/* akakiy813@84.201.168.22:/home/akakiy813/news-site-api"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.4",
     "core-js": "3.1.4",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "editorconfig": "^0.15.3",
     "express": "^4.17.1",
